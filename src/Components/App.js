@@ -4,6 +4,9 @@ import { gql } from "apollo-boost";
 import GlobalStyles from "../Styles/GlobalStyles";
 import AppRouter from './Router';
 import { useQuery } from 'react-apollo-hooks';
+import { ThemeProvider } from 'styled-components';
+import Theme from '../Styles/Theme';
+import Footer from './Footer';
 
 const Query = gql`
   {
@@ -15,11 +18,16 @@ const Query = gql`
 export default () => {
   const { data: { isLoggedIn } } = useQuery(Query);
   return (
-    <>
-      <GlobalStyles />
-      <Router>
-        <AppRouter isLoggedIn={isLoggedIn}/>
-      </Router>
-    </>
+    <ThemeProvider theme={Theme}>
+      <>
+        <GlobalStyles />
+        <Router>
+          <>
+            <AppRouter isLoggedIn={isLoggedIn}/>
+            <Footer />
+          </>
+        </Router>
+      </>
+    </ThemeProvider>
   );
 };
